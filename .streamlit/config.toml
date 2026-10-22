@@ -1,0 +1,10 @@
+# Theme only. Do NOT set server.port here: Streamlit Community Cloud's health check expects 8501.
+# Locally, pass the port on the command line instead:  py -m streamlit run app.py --server.port 8796
+[theme]
+base = "dark"
+backgroundColor = "#05060b"
+primaryColor = "#22e6ff"
+textColor = "#e9ecf6"
+
+[browser]
+gatherUsageStats = false

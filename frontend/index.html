@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Cars x Aura — 3D Racing by Saif Ur Rehman</title>
+  <meta name="description" content="Cars x Aura: a free browser-based 3D arcade racing game with Pakistan Highway, Desert Storm and Neon City tracks. Created and developed by Saif Ur Rehman, a student from Pakistan." />
+  <meta name="author" content="Saif Ur Rehman" />
+  <meta name="theme-color" content="#05060b" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%2322e6ff'/%3E%3Cstop offset='1' stop-color='%23a855ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305060b'/%3E%3Cpath d='M14 44 L30 14 L36 14 L22 44Z M30 44 L44 14 L50 14 L36 44Z' fill='url(%23g)'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Import-map polyfill for older Safari / Firefox builds (no-op where import maps are native). -->
+  <script async src="lib/es-module-shims/es-module-shims.js"></script>
+  <script type="importmap">
+    { "imports": { "three": "./lib/three/three.module.js", "three/addons/": "./lib/three/addons/" } }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <canvas id="game-canvas" aria-label="Cars x Aura 3D view"></canvas>
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+    <div id="hud" class="hidden"></div>
+    <div id="touch" class="hidden"></div>
+    <div id="screens"></div>
+    <div id="toast" aria-live="polite"></div>
+    <div id="rotate-hint">Rotate your device to landscape for the best experience ↻</div>
+  </div>
+
+  <div id="loading">
+    <div class="l-logo"><span class="l-cars">CARS</span><span class="l-x">x</span><span class="l-aura">AURA</span></div>
+    <div class="l-sub">ULTRA 3D RACING</div>
+    <div class="l-bar"><div class="l-fill"></div></div>
+    <div class="l-msg">Loading…</div>
+    <div class="l-dev">Created &amp; developed by <b>Saif Ur Rehman</b> · Pakistan <i class="pk-flag" role="img" aria-label="Pakistan flag"></i></div>
+  </div>
+
+  <noscript><p class="noscript">Cars x Aura needs JavaScript enabled.</p></noscript>
+
+  <script>
+    // Streamlit host bridge: when embedded as a Streamlit component, report readiness, size the frame
+    // to the window and offer a button that opens the game full-screen in its own tab.
+    (function () {
+      window.__embedded = window.parent !== window;
+      if (!window.__embedded) return;
+      function send(type, extra) { var m = { isStreamlitMessage: true, type: type }; for (var k in extra) m[k] = extra[k]; try { window.parent.postMessage(m, '*'); } catch (e) {} }
+      send('streamlit:componentReady', { apiVersion: 1 });
+      var last = 0;
+      function fit() { var h = 720; try { h = Math.max(480, window.parent.innerHeight - 40); } catch (e) {} if (h !== last) { last = h; send('streamlit:setFrameHeight', { height: h }); } }
+      fit(); setInterval(fit, 1000);
+      window.addEventListener('DOMContentLoaded', function () {
+        var b = document.createElement('button');
+        b.id = 'open-tab'; b.textContent = '⛶'; b.title = 'Open full screen in a new tab';
+        b.onclick = function () { window.open(location.href.split('#')[0], '_blank'); };
+        document.body.appendChild(b);
+      });
+    })();
+    // Failsafe: never leave the player on a frozen loading screen.
+    setTimeout(function () {
+      if (window.__booted || window.__bootFailed) return;
+      var m = document.querySelector('#loading .l-msg');
+      if (m) m.innerHTML = 'Still loading… If nothing happens, your browser may not support ES modules or WebGL.<br>Use a recent Chrome, Edge, Firefox or Safari and open the game through a web server (not file://).<br><button onclick="location.reload()">Reload</button>';
+    }, 30000);
+    if (location.protocol === 'file:') {
+      document.querySelector('#loading .l-msg').textContent = 'Please run the game through a web server (see README) — browsers block modules on file://.';
+    }
+    (function () {
+      var msg = document.querySelector('#loading .l-msg');
+      function block(html) { window.__bootFailed = true; msg.innerHTML = html + '<br><small>Works in up-to-date Chrome, Edge, Firefox, Safari, Opera and Samsung Internet.</small>'; }
+      if (!('noModule' in document.createElement('script'))) { block('Your browser is too old to run Cars x Aura. Please update it.'); return; }
+      var gl = null, c = document.createElement('canvas');
+      try { gl = c.getContext('webgl2') || c.getContext('webgl'); } catch (e) {}
+      if (!gl) { block('3D graphics (WebGL) are switched off or not supported.<br>Turn on <b>hardware acceleration</b> in your browser settings, update your graphics driver and reload.'); return; }
+      gl = c = null;
+      window.addEventListener('error', function (e) {
+        if (window.__booted || window.__bootFailed || !e.filename || e.filename.indexOf(location.origin) !== 0) return;
+        block('The game code could not start (' + String(e.message).replace(/</g, '&lt;') + ').<br>Please update your browser and reload.');
+      });
+    })();
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
