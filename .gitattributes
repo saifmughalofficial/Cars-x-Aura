@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Third-party libraries bundled with the game: exclude from GitHub's language statistics
+frontend/lib/** linguist-vendored
+# Screenshots are documentation, not code
+docs/** linguist-documentation

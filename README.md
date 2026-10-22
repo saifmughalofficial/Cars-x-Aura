@@ -1,5 +1,12 @@
 # Cars x Aura — Ultra-3D Racing for the Web
 
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2020_modules-F7DF1E?logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-r160_WebGL-000000?logo=threedotjs&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-hosting-FF4B4B?logo=streamlit&logoColor=white)
+
 > **Cars x Aura**
 >
 > Created and developed by **Saif Ur Rehman**
@@ -18,6 +25,31 @@ Cars x Aura is a free, browser-based 3D arcade racing game inspired by the energ
 | ![Neon City](docs/screenshots/neon-city.png) | ![Cinematic](docs/screenshots/cinematic.png) |
 | **Garage** | **Cockpit view** |
 | ![Garage](docs/screenshots/garage.png) | ![Cockpit](docs/screenshots/cockpit.png) |
+
+---
+
+## Built with: languages and technologies
+
+The game is written in **JavaScript**, which runs in the browser. **Python** is used only to host it with Streamlit and to run the automated tests.
+
+| Language | Share of the project's own code | Used for |
+|---|---|---|
+| **JavaScript** (ES modules) | 85.9 % | the whole game: 3D rendering, physics, AI, race logic, cars, tracks, audio and UI |
+| **CSS** | 7.8 % | menus, garage, HUD, touch controls and responsive layout |
+| **Python** | 4.9 % | Streamlit hosting (`app.py`, `streamlit_app/`) and the Playwright test suite (`tests/`) |
+| **HTML** | 1.3 % | the single game page (`frontend/index.html`) |
+| **Batch** | 0.1 % | Windows launchers (`PLAY_GAME.bat`, `RUN_STREAMLIT.bat`) |
+
+| Technology | Role |
+|---|---|
+| [Three.js](https://threejs.org) r160 / **WebGL 2** | 3D engine: rendering, shadows, materials, bloom post-processing |
+| **Web Audio API** | all sound, synthesised live: engines, tyres, effects, music |
+| **Canvas 2D** | procedural textures, the speedometer and the mini-map |
+| **localStorage** | saves, settings and ghost laps |
+| [Streamlit](https://streamlit.io) | free hosting wrapper (Streamlit Community Cloud) |
+| [Playwright](https://playwright.dev) | automated browser tests |
+
+The percentages exclude the bundled Three.js library in `frontend/lib/`, which `.gitattributes` marks as vendored so GitHub's language bar counts only the game's own code.
 
 ---
 
